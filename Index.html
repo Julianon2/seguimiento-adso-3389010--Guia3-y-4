@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguimiento GA3 · GA4 — Ficha 3389010 | SENA ADSO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sena-verde: #39a900;
+  --sena-naranja: #ff6b00;
+  --texto: #1a1a2e;
+  --texto-dim: #4a5568;
+  --texto-dimmer: #718096;
+  --bg: #f8fafc;
+  --borde: #e2e8f0;
+  --acento-azul: #3b82f6;
+  --acento-purpura: #8b5cf6;
+  --alerta-amarillo: #f59e0b;
+  --alerta-rojo: #ef4444;
+  --exito-verde: #10b981;
+  --no-disponible: #94a3b8;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family:'Inter',sans-serif;
+  color: var(--texto);
+  background: var(--bg);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+.topbar {
+  position:sticky;
+  top:0;
+  z-index:100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--borde);
+  padding:16px 32px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  flex-wrap:wrap;
+  gap:16px;
+}
+
+.topbar-left { display:flex; align-items:center; gap:16px; }
+
+.sena-logo {
+  background: var(--sena-verde);
+  color:#fff;
+  font-weight:900;
+  font-size:18px;
+  padding:8px 16px;
+  border-radius:8px;
+  letter-spacing:1px;
+}
+
+.topbar-brand { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color: var(--texto); }
+.topbar-sub { font-size:12px; color: var(--texto-dim); margin-top:2px; }
+
+.topbar-nav { display:flex; gap:20px; flex-wrap:wrap; }
+.topbar-nav a { text-decoration:none; font-size:13px; font-weight:600; color: var(--texto-dimmer); transition:color .25s; }
+.topbar-nav a:hover { color: var(--sena-verde); }
+
+.slide { min-height:100vh; padding:80px 48px; position:relative; scroll-margin-top:64px; }
+.slide-inner { max-width:1200px; margin:0 auto; }
+
+.bg-glow { position:absolute; width:600px; height:600px; border-radius:50%; filter:blur(120px); opacity:0.3; pointer-events:none; z-index:0; }
+.bg-glow.g1 { background: var(--sena-verde); top:-200px; left:-200px; }
+.bg-glow.g2 { background: var(--sena-naranja); bottom:-200px; right:-200px; }
+
+.portada-sena-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background: rgba(255,255,255,0.9); border:1px solid var(--borde);
+  padding:10px 20px; border-radius:30px; font-size:12px; font-weight:700;
+  color: var(--texto-dim); letter-spacing:1.5px; margin-bottom:32px;
+  position:relative; z-index:1;
+}
+
+.portada-titulo {
+  font-family:'Syne',sans-serif; font-size:clamp(40px, 7vw, 64px); font-weight:800;
+  line-height:1.1; margin-bottom:24px; color: var(--texto); position:relative; z-index:1;
+  text-wrap: balance;
+}
+.portada-titulo .linea2 {
+  display:block;
+  background: linear-gradient(135deg, var(--sena-verde), var(--sena-naranja));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+.portada-desc { font-size:clamp(16px, 2vw, 20px); color: var(--texto-dim); max-width:760px; margin-bottom:32px; position:relative; z-index:1; line-height:1.7; }
+
+.sec-header { margin-bottom:48px; }
+.sec-tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:8px 16px; border-radius:20px; margin-bottom:16px; }
+.sec-tag.verde { background: rgba(57,169,0,0.1); color: var(--sena-verde); }
+.sec-tag.naranja { background: rgba(255,107,0,0.1); color: var(--sena-naranja); }
+.sec-tag.azul { background: rgba(59,130,246,0.1); color: var(--acento-azul); }
+.sec-tag.gris { background: rgba(148,163,184,0.15); color: #64748b; }
+
+.sec-titulo { font-family:'Syne',sans-serif; font-size:clamp(30px, 4.5vw, 44px); font-weight:800; line-height:1.2; color: var(--texto); margin-bottom:16px; text-wrap: balance; }
+.sec-desc { font-size:17px; color: var(--texto-dim); max-width:800px; line-height:1.7; }
+
+.stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:24px; margin:40px 0; }
+.stat-card {
+  background:#fff; border:2px solid var(--borde); border-radius:20px; padding:32px;
+  text-align:center; transition:all .3s; position:relative; overflow:hidden;
+}
+.stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, var(--sena-verde), var(--sena-naranja)); }
+.stat-card:hover { transform:translateY(-4px); box-shadow: 0 8px 24px rgba(57,169,0,0.15); border-color: var(--sena-verde); }
+.stat-icon { font-size:44px; margin-bottom:16px; display:block; }
+.stat-numero { font-family:'Syne',sans-serif; font-size:44px; font-weight:800; color: var(--sena-verde); line-height:1; margin-bottom:8px; font-variant-numeric: tabular-nums; }
+.stat-label { font-size:15px; font-weight:600; color: var(--texto-dim); }
+
+.info-box { background: rgba(59,130,246,0.05); border-left:4px solid var(--acento-azul); border-radius:12px; padding:24px; margin:24px 0; }
+.info-box.warning { background: rgba(245,158,11,0.05); border-left-color: var(--alerta-amarillo); }
+.info-box.success { background: rgba(16,185,129,0.05); border-left-color: var(--exito-verde); }
+.info-box.neutral { background: rgba(148,163,184,0.08); border-left-color: var(--no-disponible); }
+.info-box p { margin:0; font-size:15px; line-height:1.7; color: var(--texto); }
+.info-box p + p { margin-top:12px; }
+.info-box strong { font-weight:700; color: var(--texto); }
+
+.progress-container { margin:32px 0; }
+.progress-item { margin-bottom:24px; }
+.progress-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:12px; flex-wrap:wrap; }
+.progress-label { font-size:15px; font-weight:600; color: var(--texto); }
+.progress-count { font-size:14px; font-weight:700; color: var(--texto-dim); font-variant-numeric: tabular-nums; white-space:nowrap; }
+.progress-bar-bg { background: var(--borde); border-radius:10px; height:12px; overflow:hidden; display:flex; }
+.progress-bar-fill { height:100%; transition:width 1s ease; }
+.progress-bar-fill.excelente { background: var(--exito-verde); }
+.progress-bar-fill.sobresaliente { background: var(--acento-azul); }
+.progress-bar-fill.bueno { background: var(--sena-verde); }
+.progress-bar-fill.aceptable { background: var(--alerta-amarillo); }
+.progress-bar-fill.bajo { background: var(--sena-naranja); }
+.progress-bar-fill.critico { background: var(--alerta-rojo); }
+.progress-bar-fill.nodisp { background: var(--no-disponible); }
+
+.student-table-container { background:#fff; border:2px solid var(--borde); border-radius:20px; padding:32px; margin:32px 0; overflow-x:auto; }
+.student-table { width:100%; border-collapse:collapse; font-size:14px; }
+.student-table thead { background: var(--bg); }
+.student-table th { padding:16px 12px; text-align:left; font-weight:700; color: var(--texto); border-bottom:2px solid var(--borde); white-space:nowrap; }
+.student-table td { padding:12px; border-bottom:1px solid var(--borde); }
+.student-table tbody tr:hover { background: rgba(57,169,0,0.05); }
+.student-name { font-weight:600; color: var(--texto); }
+.student-email { font-size:12px; color: var(--texto-dimmer); }
+
+.badge-evidencias { display:inline-block; padding:4px 12px; border-radius:12px; font-size:13px; font-weight:700; font-variant-numeric: tabular-nums; }
+.badge-excelente { background: rgba(16,185,129,0.1); color: var(--exito-verde); }
+.badge-sobresaliente { background: rgba(59,130,246,0.1); color: var(--acento-azul); }
+.badge-bueno { background: rgba(57,169,0,0.1); color: var(--sena-verde); }
+.badge-aceptable { background: rgba(245,158,11,0.1); color: var(--alerta-amarillo); }
+.badge-bajo { background: rgba(255,107,0,0.1); color: var(--sena-naranja); }
+.badge-critico { background: rgba(239,68,68,0.1); color: var(--alerta-rojo); }
+
+.detalle-estudiante { display:none; margin-top:16px; padding:20px; background: var(--bg); border-radius:12px; }
+.detalle-estudiante.show { display:block; }
+
+.btn-ver-detalle { background: none; border:none; color: var(--sena-verde); font-size:13px; font-weight:600; cursor:pointer; padding:4px 8px; border-radius:6px; transition:background .2s; }
+.btn-ver-detalle:hover, .btn-ver-detalle:focus-visible { background: rgba(57,169,0,0.1); outline: 2px solid var(--sena-verde); outline-offset:2px; }
+
+.ev-grid { display:grid; gap:8px; }
+.ev-row { display:flex; align-items:center; gap:10px; font-size:13px; padding:8px 12px; border-radius:8px; background:#fff; border:1px solid var(--borde); }
+.ev-row.entregado { border-left:3px solid var(--exito-verde); }
+.ev-row.pendiente { border-left:3px solid var(--alerta-amarillo); background: rgba(245,158,11,0.04); }
+.ev-row.nodisp { border-left:3px solid var(--no-disponible); background: rgba(148,163,184,0.06); }
+.ev-status { font-size:16px; flex-shrink:0; }
+
+footer { background: var(--sena-verde); text-align:center; padding:32px 24px; font-size:12px; color: rgba(255,255,255,0.85); }
+footer span { color:#fff; font-weight:700; }
+
+.reveal { opacity:0; transform:translateY(30px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity:1; transform:translateY(0); }
+
+.tag-pill {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 14px; border-radius:10px; font-size:12px; font-weight:700;
+}
+
+input[type="text"]:focus-visible { outline: 2px solid var(--sena-verde); outline-offset:2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity:1; transform:none; transition:none; }
+  .progress-bar-fill { transition:none; }
+}
+
+@media (max-width: 768px) {
+  .slide { padding:56px 20px; }
+  .stats-grid { grid-template-columns:1fr; }
+  .topbar { flex-direction:column; align-items:flex-start; }
+  .topbar-nav { width:100%; overflow-x:auto; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-left">
+    <div class="sena-logo">SENA</div>
+    <div>
+      <div class="topbar-brand">Seguimiento de Evidencias · Ficha 3389010</div>
+      <div class="topbar-sub">Guías 3 y 4 · Actualizado 25 de mayo de 2026</div>
+    </div>
+  </div>
+  <div class="topbar-nav">
+    <a href="#inicio">Inicio</a>
+    <a href="#guia3">Guía 3</a>
+    <a href="#guia4">Guía 4</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#conclusiones">Conclusiones</a>
+  </div>
+</nav>
+
+<!-- PORTADA -->
+<div class="slide" id="inicio" style="min-height:100vh; display:flex; align-items:center;">
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+  <div class="slide-inner">
+    <div class="portada-sena-tag">📊 SEGUIMIENTO GA3 · GA4 · FICHA 3389010</div>
+    <h1 class="portada-titulo">
+      Dos guías,<br>
+      <span class="linea2">dos momentos del programa de formación</span>
+    </h1>
+    <p class="portada-desc">
+      La <strong>Guía 3 — Estructurar procesos lógicos para la construcción de algoritmos</strong> (competencia 220501093, resultado 03 — algoritmos) ya cerró su ventana de entrega el 25 de mayo. La <strong>Guía 4 — Determinar la estructura lógica y tecnológica del sistema</strong> (competencia 220501095 — diseño de software) sigue activa: de sus <strong>15 evidencias</strong>, solo <strong>10 están habilitadas</strong> para entrega; las 5 restantes abren dentro del mismo plazo y cierran el <strong>24 de julio de 2026</strong>.
+    </p>
+    <div style="position:relative; z-index:1; display:flex; gap:16px; flex-wrap:wrap;">
+      <div style="background:rgba(57,169,0,0.1); padding:12px 20px; border-radius:12px; border:2px solid var(--sena-verde);">
+        <div style="font-size:11px; font-weight:700; color:var(--texto-dim); letter-spacing:1px;">GUÍA 3 · ESTADO</div>
+        <div style="font-size:14px; font-weight:700; color:var(--sena-verde); margin-top:4px;">CERRADA · 7/7 EVIDENCIAS HABILITADAS</div>
+      </div>
+      <div style="background:rgba(255,107,0,0.1); padding:12px 20px; border-radius:12px; border:2px solid var(--sena-naranja);">
+        <div style="font-size:11px; font-weight:700; color:var(--texto-dim); letter-spacing:1px;">GUÍA 4 · ESTADO</div>
+        <div style="font-size:14px; font-weight:700; color:var(--sena-naranja); margin-top:4px;">ACTIVA · 10/15 HABILITADAS</div>
+      </div>
+      <div style="background:rgba(148,163,184,0.15); padding:12px 20px; border-radius:12px; border:2px solid var(--no-disponible);">
+        <div style="font-size:11px; font-weight:700; color:var(--texto-dim); letter-spacing:1px;">FICHA</div>
+        <div style="font-size:14px; font-weight:700; color:#475569; margin-top:4px;">3389010 · 47 APRENDICES</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GUÍA 3 -->
+<div class="slide" id="guia3">
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <div class="sec-tag verde">Fase Planeación · Cerrada</div>
+      <h2 class="sec-titulo">Guía 3 — Estructurar procesos lógicos para la construcción de algoritmos</h2>
+      <p class="sec-desc">Competencia <strong>220501093-03</strong> — Desarrollar procesos lógicos a través de la implementación de algoritmos. 7 evidencias, ventana de entrega cerrada el 25 de mayo de 2026.</p>
+    </div>
+
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <span class="stat-icon">👥</span>
+        <div class="stat-numero">47</div>
+        <div class="stat-label">Aprendices · Ficha 3389010</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🏆</span>
+        <div class="stat-numero" id="g3-completos">—</div>
+        <div class="stat-label">Con 7/7 evidencias</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">⚠️</span>
+        <div class="stat-numero" id="g3-parciales" style="color:var(--alerta-amarillo);">—</div>
+        <div class="stat-label">Con avance parcial</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">❌</span>
+        <div class="stat-numero" id="g3-sin-avance" style="color:var(--alerta-rojo);">—</div>
+        <div class="stat-label">Sin ninguna evidencia</div>
+      </div>
+    </div>
+
+    <div class="info-box success reveal">
+      <p><strong>📋 Resultado de aprendizaje:</strong> 220501093-03. Evidencias: AA1-EV01, AA1-EV02, AA2-EV01, AA2-EV02, AA2-EV03, AA3-EV01, AA3-EV02.</p>
+    </div>
+
+    <div class="reveal" style="margin-top:32px;">
+      <h3 style="font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:16px;">Entrega por evidencia</h3>
+      <div id="g3-resumen-evidencias"></div>
+    </div>
+
+    <div class="student-table-container reveal">
+      <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+        <h3 style="font-family:'Syne',sans-serif; font-size:18px; font-weight:700; color:var(--texto); margin:0;">Detalle por aprendiz</h3>
+        <input type="text" id="searchG3" placeholder="🔍 Buscar aprendiz..." style="padding:10px 16px; border:2px solid var(--borde); border-radius:8px; font-size:14px; width:280px; max-width:100%;">
+      </div>
+      <table class="student-table">
+        <thead>
+          <tr><th style="width:44px;">#</th><th>Aprendiz</th><th style="text-align:center;">Evidencias</th><th style="text-align:center;">%</th><th style="text-align:center;">Detalle</th></tr>
+        </thead>
+        <tbody id="g3-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- GUÍA 4 -->
+<div class="slide" id="guia4">
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <div class="sec-tag naranja">Fase Planeación · Activa</div>
+      <h2 class="sec-titulo">Guía 4 — Determinar la estructura lógica y tecnológica del sistema</h2>
+      <p class="sec-desc">Competencia <strong>220501095</strong> — Diseñar la solución de software de acuerdo con procedimientos y requisitos técnicos. 15 evidencias en total; el cierre de la guía es el <strong>24 de julio de 2026</strong>.</p>
+    </div>
+
+    <div class="info-box neutral reveal">
+      <p><strong>⏳ 5 evidencias aún no disponibles para entrega</strong> (no se cuentan como pendientes de los aprendices, porque su ventana todavía no abre):</p>
+      <p style="margin-top:8px; font-size:14px;">
+        AA3-EV03 — Diagrama de despliegue para caso de estudio y proyecto de software<br>
+        AA4-EV01 — Taller sobre validación de documentos<br>
+        AA4-EV02 — Diseño de instrumentos para verificación de artefactos<br>
+        AA4-EV03 — Listas de chequeo para validación de documentación de diseño<br>
+        AA4-EV04 — Informe de evaluación a los artefactos de diseño del software
+      </p>
+      <p style="margin-top:8px; font-size:13px; color:var(--texto-dimmer);">Estas 5 evidencias cierran el resultado <strong>220501095-04</strong> (verificar los entregables de la fase de diseño). Hasta que no se califiquen, ningún aprendiz puede completar ese resultado.</p>
+    </div>
+
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <span class="stat-icon">👥</span>
+        <div class="stat-numero">47</div>
+        <div class="stat-label">Aprendices · Ficha 3389010</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🏆</span>
+        <div class="stat-numero" id="g4-al-dia">—</div>
+        <div class="stat-label">Al día (10/10 habilitadas)</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">⚠️</span>
+        <div class="stat-numero" id="g4-parciales" style="color:var(--alerta-amarillo);">—</div>
+        <div class="stat-label">Con avance parcial</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">❌</span>
+        <div class="stat-numero" id="g4-sin-avance" style="color:var(--alerta-rojo);">—</div>
+        <div class="stat-label">Sin ninguna evidencia</div>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:32px;">
+      <h3 style="font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:16px;">Entrega por evidencia (10 habilitadas + 5 no disponibles)</h3>
+      <div id="g4-resumen-evidencias"></div>
+    </div>
+
+    <div class="student-table-container reveal">
+      <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+        <h3 style="font-family:'Syne',sans-serif; font-size:18px; font-weight:700; color:var(--texto); margin:0;">Detalle por aprendiz</h3>
+        <input type="text" id="searchG4" placeholder="🔍 Buscar aprendiz..." style="padding:10px 16px; border:2px solid var(--borde); border-radius:8px; font-size:14px; width:280px; max-width:100%;">
+      </div>
+      <table class="student-table">
+        <thead>
+          <tr><th style="width:44px;">#</th><th>Aprendiz</th><th style="text-align:center;">Habilitadas</th><th style="text-align:center;">%</th><th style="text-align:center;">Detalle</th></tr>
+        </thead>
+        <tbody id="g4-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARATIVA -->
+<div class="slide" id="comparativa">
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <div class="sec-tag azul">Trazabilidad</div>
+      <h2 class="sec-titulo">De la Guía 3 a la Guía 4</h2>
+      <p class="sec-desc">Aprendices que completaron la Guía 3 al 100% y su estado actual en la Guía 4, sobre lo ya habilitado.</p>
+    </div>
+    <div class="student-table-container reveal">
+      <table class="student-table">
+        <thead>
+          <tr><th>Aprendiz</th><th style="text-align:center;">Guía 3 (7 ev.)</th><th style="text-align:center;">Guía 4 (10 hab.)</th><th style="text-align:center;">Lectura</th></tr>
+        </thead>
+        <tbody id="comparativa-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CONCLUSIONES -->
+<div class="slide" id="conclusiones" style="min-height:100vh; display:flex; align-items:center;">
+  <div class="slide-inner">
+    <div style="background:linear-gradient(135deg, var(--sena-verde), #2d7a00); border-radius:24px; padding:56px; text-align:center; color:#fff;">
+      <div style="font-size:64px; margin-bottom:20px;">🎯</div>
+      <h2 style="font-family:'Syne',sans-serif; font-size:40px; font-weight:800; margin-bottom:24px; text-wrap:balance;">Conclusiones</h2>
+      <div style="background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2); border-radius:20px; padding:32px; margin-top:32px; text-align:left; max-width:900px; margin-left:auto; margin-right:auto;">
+        <ul style="list-style:none; padding:0; margin:0;" id="conclusiones-lista"></ul>
+      </div>
+      <div style="margin-top:40px; padding:20px; background:rgba(0,0,0,0.2); border-radius:16px;">
+        <p style="font-size:17px; font-weight:600; margin:0;">📅 Reporte actualizado: 25 de mayo de 2026</p>
+        <p style="font-size:13px; margin-top:6px; opacity:0.9;">Guía 3 (220501093-03) cerrada · Guía 4 (220501095) activa, cierra 24 de julio de 2026</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Reporte <span>SEGUIMIENTO DE EVIDENCIAS — GUÍAS 3 Y 4</span></p>
+  <p>Programa <span>Análisis y Desarrollo de Software</span> · Ficha <span>3389010</span></p>
+  <p>Instructor: <span>Julián Andrés Trujillo Morales</span> · SENA · 25 mayo 2026</p>
+</footer>
+
+<script>
+// ══════════════════ DATOS GUÍA 3 (7 evidencias · 18 aprendices con avance + 29 en cero) ══════════════════
+const g3Evidencias = [
+  { id:"AA1-EV01", label:"Bases conceptuales lógica proposicional" },
+  { id:"AA1-EV02", label:"Taller pseudocódigo y diagramas de flujo" },
+  { id:"AA2-EV01", label:"Fundamentos programación estructurada y cíclicas" },
+  { id:"AA2-EV02", label:"Foro — Estructuras de programación" },
+  { id:"AA2-EV03", label:"Taller funciones y procedimientos" },
+  { id:"AA3-EV01", label:"Bases teóricas estructuras de almacenamiento" },
+  { id:"AA3-EV02", label:"Resolución algoritmos con JavaScript" }
+];
+
+// A = Aprobado · P = Pendiente (evidencia habilitada, sin entregar/aprobar)
+const g3Estudiantes = [
+  { nombre:"ANDERSON JAIR ARANGO ARIAS",        cc:"1036654544", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"LUIS GIOVANNI BURBANO LOPEZ",       cc:"87063862",   ev:["A","A","A","A","A","A","A"] },
+  { nombre:"DANIEL SEBASTIAN DIAZ MORALES",     cc:"1085328903", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"CRISTIAN ANDRES ESTRADA GELVIS",    cc:"1004914198", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"DARLY FALCO MEDRANO",               cc:"1039079249", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"JHONATAN ANDRES FUENTES AGAMEZ",    cc:"1062960434", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"GARY WILLIAM GARCIA TORRES",        cc:"1000372847", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"JUAN FERNANDO GIL COLORADO",        cc:"1128460769", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"RACHAEL VALENTINA GOMEZ RIVERA",    cc:"1032440534", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"JUAN FERNANDO GOMEZ ROJAS",         cc:"1076502676", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"LUIS CHRISTIAN GONZALEZ TORRES",    cc:"1033732682", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"VALENTINA MENA PASSO",              cc:"1025882327", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"JOSUE GABRIEL MURCIA OLARTE",       cc:"1161213266", ev:["A","A","A","A","A","A","A"] },
+  { nombre:"NIKOL DAYANN CONTRERAS GUERRERO",   cc:"1001174399", ev:["A","A","A","A","A","A","P"] },
+  { nombre:"ROBERT ANDRES RODRIGUEZ LOPEZ",     cc:"1024513230", ev:["A","A","A","A","A","A","P"] },
+  { nombre:"JUAN JOSE RUIZ BUSTAMANTE",         cc:"1020397170", ev:["A","A","A","P","A","A","A"] },
+  { nombre:"ANDREA CAROLINA BLANCO ESCOBAR",    cc:"1031166404", ev:["A","A","A","A","A","P","P"] },
+  { nombre:"MIGUEL SANTIAGO MIRANDA VERA",      cc:"1016835047", ev:["P","P","P","A","P","P","P"] },
+  { nombre:"JOHAN RICARDO RODRIGUEZ CASTRO",    cc:"1001196672", ev:["A","P","P","P","P","P","P"] },
+  { nombre:"JORGE LUIS ALDANA HERNANDEZ",       cc:"1063282339", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"DAVID STEVEN AREVALO MARTINE",      cc:"1001340131", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"ANGELO ANDREY CARRASCAL BAYONA",    cc:"1093753831", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"NELCY YASMIN CELY JIMENEZ",         cc:"1073152216", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"MARLON CERON VILLAREAL",            cc:"1006171902", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JUAN CAMILO CHILA DIAZ",            cc:"1109847756", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"LUIS ERNESTO CORTES RODRIGUEZ",     cc:"1022959928", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"DANIEL CAMILO DIAZ MARTINEZ",       cc:"1070947419", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"ANDRES FELIPE DOMINGUEZ ROSERO",    cc:"1193134020", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"FABIAN ALEXIS DURAN APONTE",        cc:"1072664488", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JORGE ORLANDO ESTRADA FLOREZ",      cc:"98537152",   ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JHONATAN FLOREZ LOPEZ",             cc:"1116282797", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JUAN FELIPE GIRALDO CALLE",         cc:"1152451657", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"LUZ DARY GONZALEZ MARIN",           cc:"52428532",   ev:["P","P","P","P","P","P","P"] },
+  { nombre:"KEMER GUZMAN CUERVO",               cc:"1070600011", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"DIANA PAOLA LARA LATORRE",          cc:"1075665813", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JENNY PATRICIA LEMUS ARDILA",       cc:"1122130280", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JUAN DAVID LONDOÑO VIDAL",          cc:"1097729016", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"ALEJANDRO MARULANDA LOPEZ",         cc:"1040051113", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"SEBASTIAN NUÑEZ ALZATE",            cc:"1003952700", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JUAN PABLO PINEDA CUBIDES",         cc:"1000287411", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JULIAN MAURICIO POLANIA FIGUEROA",  cc:"1109265306", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JUAN DAVID REINA GONZALEZ",         cc:"80137892",   ev:["P","P","P","P","P","P","P"] },
+  { nombre:"NICOLAS JUNIOR ROJAS POLOCHE",      cc:"1120356630", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"SHARIN STHEPANIE SIERRA BASTOS",    cc:"1007898272", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"ALEJANDRO SILVA JARAMILLO",         cc:"1118567727", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"NASLY YURLAY SOUZA RESTREPO",       cc:"1125470061", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"GABRIELA SUSANO DUARTE",            cc:"1112046150", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"KEVIN ALEJANDRO TORRES GUIO",       cc:"1072646203", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"LAURA ALEJANDRA TORRES MORA",       cc:"1192763647", ev:["P","P","P","P","P","P","P"] },
+  { nombre:"JULIO CESAR VILLALOBOS AGUIRRE",    cc:"8799446",    ev:["P","P","P","P","P","P","P"] }
+];
+
+// ══════════════════ DATOS GUÍA 4 (10 evidencias habilitadas de 15 · 47 aprendices) ══════════════════
+const g4Evidencias = [
+  { id:"AA1-EV01", label:"Modelo conceptual y lógico — caso de estudio" },
+  { id:"AA1-EV02", label:"Modelo conceptual y lógico — proyecto" },
+  { id:"AA2-EV01", label:"Taller conceptos y principios POO" },
+  { id:"AA2-EV02", label:"Informe de entregables del proyecto" },
+  { id:"AA2-EV03", label:"Bases conceptuales UML y patrones de diseño" },
+  { id:"AA2-EV04", label:"Diagrama de clases del proyecto" },
+  { id:"AA2-EV05", label:"Desarrollar arquitectura de software" },
+  { id:"AA2-EV06", label:"Taller — Arquitectura de software" },
+  { id:"AA3-EV01", label:"Mapa conceptual — ciclo de vida del software" },
+  { id:"AA3-EV02", label:"Foro — Implementar arquitectura de software" }
+];
+
+const g4NoDisponibles = [
+  { id:"AA3-EV03", label:"Diagrama de despliegue — caso de estudio y proyecto" },
+  { id:"AA4-EV01", label:"Taller sobre validación de documentos" },
+  { id:"AA4-EV02", label:"Diseño de instrumentos para verificación de artefactos" },
+  { id:"AA4-EV03", label:"Listas de chequeo — validación de documentación de diseño" },
+  { id:"AA4-EV04", label:"Informe de evaluación a los artefactos de diseño" }
+];
+
+const g4Estudiantes = [
+  { nombre:"DARLY FALCO MEDRANO",               cc:"1039079249", ev:["A","A","A","A","A","A","A","A","A","A"] },
+  { nombre:"JUAN FERNANDO GIL COLORADO",        cc:"1128460769", ev:["A","A","A","A","A","A","A","A","A","A"] },
+  { nombre:"VALENTINA MENA PASSO",              cc:"1025882327", ev:["A","A","A","A","A","A","A","A","A","A"] },
+  { nombre:"ANDERSON JAIR ARANGO ARIAS",        cc:"1036654544", ev:["A","A","A","A","A","A","A","P","A","A"] },
+  { nombre:"JHONATAN ANDRES FUENTES AGAMEZ",    cc:"1062960434", ev:["A","A","A","A","A","A","A","A","P","A"] },
+  { nombre:"CRISTIAN ANDRES ESTRADA GELVIS",    cc:"1004914198", ev:["A","A","A","A","A","A","A","A","P","P"] },
+  { nombre:"GARY WILLIAM GARCIA TORRES",        cc:"1000372847", ev:["A","A","A","A","A","P","P","P","P","P"] },
+  { nombre:"LUIS CHRISTIAN GONZALEZ TORRES",    cc:"1033732682", ev:["A","A","A","A","A","P","P","P","P","P"] },
+  { nombre:"JOSUE GABRIEL MURCIA OLARTE",       cc:"1161213266", ev:["A","A","A","A","A","P","P","P","P","P"] },
+  { nombre:"JUAN JOSE RUIZ BUSTAMANTE",         cc:"1020397170", ev:["A","A","A","A","A","P","P","P","P","P"] },
+  { nombre:"LUIS GIOVANNI BURBANO LOPEZ",       cc:"87063862",   ev:["A","A","A","P","P","P","P","P","P","P"] },
+  { nombre:"DANIEL SEBASTIAN DIAZ MORALES",     cc:"1085328903", ev:["A","A","A","P","P","P","P","P","P","P"] },
+  { nombre:"RACHAEL VALENTINA GOMEZ RIVERA",    cc:"1032440534", ev:["A","A","P","P","P","P","P","P","P","P"] },
+  { nombre:"JORGE LUIS ALDANA HERNANDEZ",       cc:"1063282339", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"DAVID STEVEN AREVALO MARTINE",      cc:"1001340131", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"ANDREA CAROLINA BLANCO ESCOBAR",    cc:"1031166404", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"ANGELO ANDREY CARRASCAL BAYONA",    cc:"1093753831", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"NELCY YASMIN CELY JIMENEZ",         cc:"1073152216", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"MARLON CERON VILLAREAL",            cc:"1006171902", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JUAN CAMILO CHILA DIAZ",            cc:"1109847756", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"NIKOL DAYANN CONTRERAS GUERRERO",   cc:"1001174399", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"LUIS ERNESTO CORTES RODRIGUEZ",     cc:"1022959928", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"DANIEL CAMILO DIAZ MARTINEZ",       cc:"1070947419", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"ANDRES FELIPE DOMINGUEZ ROSERO",    cc:"1193134020", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"FABIAN ALEXIS DURAN APONTE",        cc:"1072664488", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JORGE ORLANDO ESTRADA FLOREZ",      cc:"98537152",   ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JHONATAN FLOREZ LOPEZ",             cc:"1116282797", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JUAN FELIPE GIRALDO CALLE",         cc:"1152451657", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JUAN FERNANDO GOMEZ ROJAS",         cc:"1076502676", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"LUZ DARY GONZALEZ MARIN",           cc:"52428532",   ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"KEMER GUZMAN CUERVO",               cc:"1070600011", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"DIANA PAOLA LARA LATORRE",          cc:"1075665813", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JENNY PATRICIA LEMUS ARDILA",       cc:"1122130280", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JUAN DAVID LONDOÑO VIDAL",          cc:"1097729016", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"ALEJANDRO MARULANDA LOPEZ",         cc:"1040051113", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"MIGUEL SANTIAGO MIRANDA VERA",      cc:"1016835047", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"SEBASTIAN NUÑEZ ALZATE",            cc:"1003952700", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JUAN PABLO PINEDA CUBIDES",         cc:"1000287411", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JULIAN MAURICIO POLANIA FIGUEROA",  cc:"1109265306", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JUAN DAVID REINA GONZALEZ",         cc:"80137892",   ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JOHAN RICARDO RODRIGUEZ CASTRO",    cc:"1001196672", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"ROBERT ANDRES RODRIGUEZ LOPEZ",     cc:"1024513230", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"NICOLAS JUNIOR ROJAS POLOCHE",      cc:"1120356630", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"SHARIN STHEPANIE SIERRA BASTOS",    cc:"1007898272", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"ALEJANDRO SILVA JARAMILLO",         cc:"1118567727", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"NASLY YURLAY SOUZA RESTREPO",       cc:"1125470061", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"GABRIELA SUSANO DUARTE",            cc:"1112046150", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"KEVIN ALEJANDRO TORRES GUIO",       cc:"1072646203", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"LAURA ALEJANDRA TORRES MORA",       cc:"1192763647", ev:["P","P","P","P","P","P","P","P","P","P"] },
+  { nombre:"JULIO CESAR VILLALOBOS AGUIRRE",    cc:"8799446",    ev:["P","P","P","P","P","P","P","P","P","P"] }
+];
+
+// ══════════════════ HELPERS ══════════════════
+const contarA = evs => evs.filter(e => e === "A").length;
+const pct = (n, max) => Math.round((n/max)*100);
+
+function badgeClass(pctVal) {
+  if (pctVal === 100) return 'badge-excelente';
+  if (pctVal >= 70)   return 'badge-sobresaliente';
+  if (pctVal >= 50)   return 'badge-bueno';
+  if (pctVal >= 30)   return 'badge-aceptable';
+  if (pctVal > 0)     return 'badge-bajo';
+  return 'badge-critico';
+}
+
+function barColor(pctVal) {
+  if (pctVal === 100) return 'excelente';
+  if (pctVal >= 70)   return 'sobresaliente';
+  if (pctVal >= 50)   return 'bueno';
+  if (pctVal >= 30)   return 'aceptable';
+  if (pctVal > 0)     return 'bajo';
+  return 'critico';
+}
+
+function renderResumenEvidencias(container, evidencias, estudiantes, extra) {
+  let html = '<div class="progress-container">';
+  evidencias.forEach((ev, i) => {
+    const entregadas = estudiantes.filter(e => e.ev[i] === "A").length;
+    const p = pct(entregadas, estudiantes.length);
+    html += `
+      <div class="progress-item">
+        <div class="progress-header">
+          <div class="progress-label">${ev.id} <span style="font-size:12px; color:var(--texto-dimmer); font-weight:400;">— ${ev.label}</span></div>
+          <div class="progress-count">${entregadas}/${estudiantes.length} entregadas</div>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill ${barColor(p)}" style="width:${p}%;"></div></div>
+      </div>`;
+  });
+  if (extra) {
+    extra.forEach(ev => {
+      html += `
+      <div class="progress-item">
+        <div class="progress-header">
+          <div class="progress-label">${ev.id} <span style="font-size:12px; color:var(--texto-dimmer); font-weight:400;">— ${ev.label}</span></div>
+          <div class="progress-count" style="color:var(--no-disponible);">⏳ No disponible aún</div>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill nodisp" style="width:100%; opacity:0.35;"></div></div>
+      </div>`;
+    });
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderTabla(tbodyId, evidencias, estudiantes, prefix) {
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = '';
+  estudiantes.forEach((est, idx) => {
+    const total = contarA(est.ev);
+    const p = pct(total, evidencias.length);
+    const tr = document.createElement('tr');
+    tr.dataset.search = est.nombre.toLowerCase();
+    tr.innerHTML = `
+      <td style="text-align:center; font-weight:600; color:var(--texto-dimmer);">${idx+1}</td>
+      <td><div class="student-name">${est.nombre}</div></td>
+      <td style="text-align:center;"><span class="badge-evidencias ${badgeClass(p)}">${total}/${evidencias.length}</span></td>
+      <td style="text-align:center; font-weight:700; color:var(--texto);">${p}%</td>
+      <td style="text-align:center;"><button class="btn-ver-detalle" onclick="toggleDetalle('${prefix}',${idx})">Ver detalle</button></td>
+    `;
+    tbody.appendChild(tr);
+
+    const trDet = document.createElement('tr');
+    trDet.innerHTML = `
+      <td colspan="5">
+        <div class="detalle-estudiante" id="detalle-${prefix}-${idx}">
+          <h4 style="font-size:14px; font-weight:700; margin-bottom:14px; color:var(--texto);">${est.nombre}</h4>
+          <div class="ev-grid">
+            ${evidencias.map((ev, i) => {
+              const val = est.ev[i];
+              const cls = val === 'A' ? 'entregado' : 'pendiente';
+              const icon = val === 'A' ? '✅' : '⏳';
+              const label = val === 'A' ? 'Entregada' : 'Pendiente';
+              const color = val === 'A' ? 'var(--exito-verde)' : 'var(--alerta-amarillo)';
+              return `<div class="ev-row ${cls}"><span class="ev-status">${icon}</span><div><div style="font-weight:600; font-size:13px;">${ev.id}</div><div style="font-size:11px; color:var(--texto-dimmer); margin-top:2px;">${ev.label}</div></div><span style="margin-left:auto; font-size:12px; font-weight:700; color:${color};">${label}</span></div>`;
+            }).join('')}
+            ${prefix === 'g4' ? g4NoDisponibles.map(ev => `<div class="ev-row nodisp"><span class="ev-status">⏳</span><div><div style="font-weight:600; font-size:13px;">${ev.id}</div><div style="font-size:11px; color:var(--texto-dimmer); margin-top:2px;">${ev.label}</div></div><span style="margin-left:auto; font-size:12px; font-weight:700; color:var(--no-disponible);">No disponible</span></div>`).join('') : ''}
+          </div>
+        </div>
+      </td>`;
+    tbody.appendChild(trDet);
+  });
+}
+
+function toggleDetalle(prefix, idx) {
+  document.getElementById(`detalle-${prefix}-${idx}`).classList.toggle('show');
+}
+
+function attachSearch(inputId, tbodyId) {
+  document.getElementById(inputId).addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll(`#${tbodyId} tr`).forEach(row => {
+      if (row.dataset.search) row.style.display = row.dataset.search.includes(q) ? '' : 'none';
+    });
+  });
+}
+
+// ══════════════════ RENDER GUÍA 3 ══════════════════
+function renderG3() {
+  const totales = g3Estudiantes.map(e => contarA(e.ev));
+  document.getElementById('g3-completos').textContent = totales.filter(t => t === 7).length;
+  document.getElementById('g3-parciales').textContent = totales.filter(t => t > 0 && t < 7).length;
+  document.getElementById('g3-sin-avance').textContent = totales.filter(t => t === 0).length;
+  renderResumenEvidencias(document.getElementById('g3-resumen-evidencias'), g3Evidencias, g3Estudiantes);
+  renderTabla('g3-tbody', g3Evidencias, g3Estudiantes, 'g3');
+  attachSearch('searchG3', 'g3-tbody');
+}
+
+// ══════════════════ RENDER GUÍA 4 ══════════════════
+function renderG4() {
+  const totales = g4Estudiantes.map(e => contarA(e.ev));
+  document.getElementById('g4-al-dia').textContent = totales.filter(t => t === 10).length;
+  document.getElementById('g4-parciales').textContent = totales.filter(t => t > 0 && t < 10).length;
+  document.getElementById('g4-sin-avance').textContent = totales.filter(t => t === 0).length;
+  renderResumenEvidencias(document.getElementById('g4-resumen-evidencias'), g4Evidencias, g4Estudiantes, g4NoDisponibles);
+  renderTabla('g4-tbody', g4Evidencias, g4Estudiantes, 'g4');
+  attachSearch('searchG4', 'g4-tbody');
+}
+
+// ══════════════════ COMPARATIVA ══════════════════
+function renderComparativa() {
+  const tbody = document.getElementById('comparativa-tbody');
+  const completosG3 = g3Estudiantes.filter(e => contarA(e.ev) === 7);
+  let html = '';
+  completosG3.forEach(e3 => {
+    const e4 = g4Estudiantes.find(e => e.cc === e3.cc);
+    const t4 = e4 ? contarA(e4.ev) : 0;
+    let lectura, color;
+    if (t4 === 10) { lectura = 'Al día en Guía 4'; color = 'var(--exito-verde)'; }
+    else if (t4 > 0) { lectura = `Avanzando (${t4}/10)`; color = 'var(--alerta-amarillo)'; }
+    else { lectura = 'Sin avance en Guía 4'; color = 'var(--alerta-rojo)'; }
+    html += `
+      <tr>
+        <td><div class="student-name">${e3.nombre}</div></td>
+        <td style="text-align:center;"><span class="badge-evidencias badge-excelente">7/7</span></td>
+        <td style="text-align:center;"><span class="badge-evidencias ${badgeClass(pct(t4,10))}">${t4}/10</span></td>
+        <td style="text-align:center; font-weight:700; color:${color}; font-size:13px;">${lectura}</td>
+      </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+// ══════════════════ CONCLUSIONES ══════════════════
+function renderConclusiones() {
+  const g3Completos = g3Estudiantes.filter(e => contarA(e.ev) === 7).length;
+  const g3SinAvance = g3Estudiantes.filter(e => contarA(e.ev) === 0).length;
+  const g4AlDia = g4Estudiantes.filter(e => contarA(e.ev) === 10).length;
+  const g4SinAvance = g4Estudiantes.filter(e => contarA(e.ev) === 0).length;
+  const completosG3 = g3Estudiantes.filter(e => contarA(e.ev) === 7);
+  const g3AG4Cero = completosG3.filter(e3 => {
+    const e4 = g4Estudiantes.find(e => e.cc === e3.cc);
+    return !e4 || contarA(e4.ev) === 0;
+  }).length;
+
+  const items = [
+    { icon:"✅", txt:`<strong>Guía 3 cerrada:</strong> ${g3Completos} de 47 aprendices (${pct(g3Completos,47)}%) completaron las 7 evidencias. ${g3SinAvance} no entregaron ninguna.` },
+    { icon:"🚧", txt:`<strong>Guía 4 activa:</strong> ${g4AlDia} aprendices están al día con las 10 evidencias ya habilitadas; ${g4SinAvance} aún no han entregado nada de lo disponible.` },
+    { icon:"⏳", txt:`<strong>5 evidencias sin abrir</strong> (AA3-EV03 y las 4 de AA4) cierran el resultado 220501095-04. Ningún aprendiz puede completar ese resultado hasta que se socialicen — no cuenta como atraso del grupo.` },
+    { icon:"📉", txt:`<strong>Caída de continuidad:</strong> de los ${g3Completos} aprendices que cerraron la Guía 3 al 100%, ${g3AG4Cero} aún no registran ninguna entrega en la Guía 4. Requieren seguimiento antes del cierre del 24 de julio.` },
+    { icon:"📋", txt:`<strong>Próximo paso:</strong> habilitar y socializar las 5 evidencias restantes de AA3 y AA4, y dar retroalimentación individual a quienes muestran caída de ritmo entre guías.` }
+  ];
+  document.getElementById('conclusiones-lista').innerHTML = items.map((it, idx) => `
+    <li style="padding:14px 0; ${idx < items.length-1 ? 'border-bottom:1px solid rgba(255,255,255,0.2);' : ''} display:flex; gap:12px; align-items:flex-start;">
+      <span style="flex-shrink:0; font-size:19px;">${it.icon}</span>
+      <span style="font-size:14px; line-height:1.6;">${it.txt}</span>
+    </li>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderG3();
+  renderG4();
+  renderComparativa();
+  renderConclusiones();
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+});
+</script>
+</body>
+</html>
